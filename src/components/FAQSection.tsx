@@ -6,9 +6,13 @@ import {
 } from "@/components/ui/accordion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import { MessageCircle, HelpCircle } from "lucide-react";
 
 const FAQSection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation<HTMLHeadingElement>();
+  const { elementRef: faqRef, isVisible: faqVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 });
+
   const faqs = [
     {
       question: "A primeira consulta é realmente gratuita?",
@@ -55,18 +59,36 @@ const FAQSection = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <HelpCircle className="h-16 w-16 text-primary mx-auto mb-6" />
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <HelpCircle 
+            className={`h-16 w-16 text-primary mx-auto mb-6 transition-all duration-800 ${
+              titleVisible ? 'animate-fade-in opacity-100 scale-100' : 'opacity-0 scale-75'
+            }`} 
+          />
+          <h2 
+            ref={titleRef}
+            className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-800 delay-200 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Dúvidas <span className="text-primary">Frequentes</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p 
+            className={`text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-800 delay-400 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Esclarecimento das principais dúvidas sobre direitos trabalhistas 
             e como posso ajudar você.
           </p>
         </div>
 
         <div className="max-w-4xl mx-auto">
-          <Card className="shadow-card">
+          <Card 
+            ref={faqRef}
+            className={`shadow-card transition-all duration-800 ${
+              faqVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             <CardContent className="p-6 md:p-8">
               <Accordion type="single" collapsible className="w-full">
                 {faqs.map((faq, index) => (

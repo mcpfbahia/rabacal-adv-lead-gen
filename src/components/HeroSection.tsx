@@ -1,8 +1,13 @@
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation } from "@/hooks/useScrollAnimation";
 import heroImage from "@/assets/hero-lawyer.jpg";
 import { Phone, MessageCircle, Calendar } from "lucide-react";
 
 const HeroSection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation();
+  const { elementRef: subtitleRef, isVisible: subtitleVisible } = useScrollAnimation({ threshold: 0.2 });
+  const { elementRef: ctaRef, isVisible: ctaVisible } = useScrollAnimation({ threshold: 0.3 });
+
   const handleWhatsApp = () => {
     const phoneNumber = "5571999999999"; // Substituir pelo número real
     const message = "Olá! Vim através do site e gostaria de agendar uma consulta gratuita sobre direito trabalhista.";

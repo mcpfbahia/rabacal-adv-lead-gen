@@ -1,5 +1,6 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 import { 
   Briefcase, 
   Clock, 
@@ -12,6 +13,10 @@ import {
 } from "lucide-react";
 
 const ServicesSection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation<HTMLHeadingElement>();
+  const { elementRef: servicesRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(6, 200);
+  const { elementRef: statsRef, isVisible: statsVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.3 });
+
   const services = [
     {
       icon: DollarSign,
@@ -62,20 +67,36 @@ const ServicesSection = () => {
     <section className="py-20 bg-background">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 
+            ref={titleRef}
+            className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-800 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Áreas de <span className="text-primary">Atuação</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p 
+            className={`text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-800 delay-200 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Especializado em todas as áreas do Direito Trabalhista para defender 
             seus direitos com conhecimento técnico e dedicação total.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div ref={servicesRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
           {services.map((service, index) => {
             const IconComponent = service.icon;
+            const isVisible = visibleItems.includes(index);
             return (
-              <Card key={index} className="shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 group">
+              <Card 
+                key={index} 
+                className={`shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-3 hover:scale-105 group ${
+                  isVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                }`}
+                style={{ transitionDelay: `${index * 200}ms` }}
+              >
                 <CardHeader className="text-center pb-4">
                   <div className="bg-gradient-hero w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 group-hover:scale-110 transition-transform duration-300">
                     <IconComponent className="h-8 w-8 text-primary-foreground" />
@@ -107,18 +128,23 @@ const ServicesSection = () => {
         </div>
 
         {/* Stats Section */}
-        <div className="mt-20 bg-gradient-hero rounded-2xl p-8 md:p-12">
+        <div 
+          ref={statsRef}
+          className={`mt-20 bg-gradient-hero rounded-2xl p-8 md:p-12 transition-all duration-800 ${
+            statsVisible ? 'animate-fade-in opacity-100 scale-100' : 'opacity-0 scale-95'
+          }`}
+        >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 text-center text-white">
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2 text-accent">100%</div>
+            <div className={`transition-all duration-800 delay-200 ${statsVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+              <div className="text-4xl md:text-5xl font-bold mb-2 text-accent animate-pulse">100%</div>
               <div className="text-lg">Dedicação aos casos</div>
             </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2 text-accent">24h</div>
+            <div className={`transition-all duration-800 delay-400 ${statsVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+              <div className="text-4xl md:text-5xl font-bold mb-2 text-accent animate-pulse">24h</div>
               <div className="text-lg">Disponibilidade para contato</div>
             </div>
-            <div>
-              <div className="text-4xl md:text-5xl font-bold mb-2 text-accent">0€</div>
+            <div className={`transition-all duration-800 delay-600 ${statsVisible ? 'animate-fade-in' : 'opacity-0'}`}>
+              <div className="text-4xl md:text-5xl font-bold mb-2 text-accent animate-pulse">0€</div>
               <div className="text-lg">Primeira consulta</div>
             </div>
           </div>

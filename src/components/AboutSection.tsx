@@ -1,7 +1,12 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { GraduationCap, BookOpen, Users, Clock, Award, Target } from "lucide-react";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 
 const AboutSection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation<HTMLHeadingElement>();
+  const { elementRef: contentRef, isVisible: contentVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 });
+  const { elementRef: cardsRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(6, 150);
+
   const qualities = [
     {
       icon: GraduationCap,
@@ -39,10 +44,19 @@ const AboutSection = () => {
     <section className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 
+            ref={titleRef}
+            className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-800 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Conheça o <span className="text-primary">Dr. Thiago Rabaçal</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
+          <p 
+            className={`text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed transition-all duration-800 delay-200 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Advogado especializado em Direito Trabalhista, formado com dedicação e 
             comprometido em defender seus direitos com conhecimento atualizado e 
             atendimento personalizado.
@@ -51,7 +65,12 @@ const AboutSection = () => {
 
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           {/* About Content */}
-          <div className="space-y-6">
+          <div 
+            ref={contentRef}
+            className={`space-y-6 transition-all duration-800 ${
+              contentVisible ? 'animate-fade-in opacity-100 translate-x-0' : 'opacity-0 -translate-x-8'
+            }`}
+          >
             <div className="bg-primary/5 border-l-4 border-primary p-6 rounded-r-lg">
               <h3 className="text-2xl font-semibold text-primary mb-3">Minha Missão</h3>
               <p className="text-lg text-foreground leading-relaxed">
@@ -85,11 +104,18 @@ const AboutSection = () => {
           </div>
 
           {/* Qualities Grid */}
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div ref={cardsRef} className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {qualities.map((quality, index) => {
               const IconComponent = quality.icon;
+              const isVisible = visibleItems.includes(index);
               return (
-                <Card key={index} className="shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-1">
+                <Card 
+                  key={index} 
+                  className={`shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-2 hover:scale-105 ${
+                    isVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+                  }`}
+                  style={{ transitionDelay: `${index * 150}ms` }}
+                >
                   <CardContent className="p-6 text-center">
                     <div className="bg-primary/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                       <IconComponent className="h-8 w-8 text-primary" />

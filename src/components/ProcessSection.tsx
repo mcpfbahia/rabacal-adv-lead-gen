@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
+import { useScrollAnimation, useStaggeredAnimation } from "@/hooks/useScrollAnimation";
 import { 
   MessageCircle, 
   Search, 
@@ -10,6 +11,10 @@ import {
 } from "lucide-react";
 
 const ProcessSection = () => {
+  const { elementRef: titleRef, isVisible: titleVisible } = useScrollAnimation<HTMLHeadingElement>();
+  const { elementRef: stepsRef, visibleItems } = useStaggeredAnimation<HTMLDivElement>(5, 300);
+  const { elementRef: benefitsRef, isVisible: benefitsVisible } = useScrollAnimation<HTMLDivElement>({ threshold: 0.2 });
+
   const steps = [
     {
       icon: MessageCircle,
@@ -59,10 +64,19 @@ const ProcessSection = () => {
     <section className="py-20 bg-gradient-subtle">
       <div className="container mx-auto px-4">
         <div className="text-center mb-16">
-          <h2 className="text-4xl md:text-5xl font-bold text-foreground mb-6">
+          <h2 
+            ref={titleRef}
+            className={`text-4xl md:text-5xl font-bold text-foreground mb-6 transition-all duration-800 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Como <span className="text-primary">Funciona</span>
           </h2>
-          <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
+          <p 
+            className={`text-xl text-muted-foreground max-w-3xl mx-auto transition-all duration-800 delay-200 ${
+              titleVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+            }`}
+          >
             Processo simples e transparente para defender seus direitos trabalhistas 
             com segurança e eficiência.
           </p>
@@ -73,13 +87,20 @@ const ProcessSection = () => {
           {/* Connection Line - Hidden on mobile */}
           <div className="hidden lg:block absolute top-24 left-0 w-full h-0.5 bg-gradient-to-r from-primary via-accent to-primary opacity-30"></div>
           
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
+          <div ref={stepsRef} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-8">
             {steps.map((step, index) => {
               const IconComponent = step.icon;
+              const isVisible = visibleItems.includes(index);
               return (
-                <div key={index} className="relative">
+                <div 
+                  key={index} 
+                  className={`relative transition-all duration-700 ${
+                    isVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
+                  }`}
+                  style={{ transitionDelay: `${index * 300}ms` }}
+                >
                   {/* Step Card */}
-                  <Card className="shadow-card hover:shadow-elegant transition-all duration-300 hover:-translate-y-2 relative z-10">
+                  <Card className="shadow-card hover:shadow-elegant transition-all duration-500 hover:-translate-y-3 hover:scale-105 relative z-10">
                     <CardContent className="p-6 text-center">
                       <div className={`${step.color} w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4 shadow-button`}>
                         <IconComponent className="h-8 w-8 text-white" />
@@ -111,7 +132,12 @@ const ProcessSection = () => {
         </div>
 
         {/* Benefits Section */}
-        <div className="mt-20 grid grid-cols-1 md:grid-cols-2 gap-8">
+        <div 
+          ref={benefitsRef}
+          className={`mt-20 grid grid-cols-1 md:grid-cols-2 gap-8 transition-all duration-800 ${
+            benefitsVisible ? 'animate-fade-in opacity-100 translate-y-0' : 'opacity-0 translate-y-8'
+          }`}
+        >
           <Card className="bg-primary/5 border-primary/20">
             <CardContent className="p-8">
               <h3 className="text-2xl font-bold text-primary mb-4">Vantagens do Processo</h3>
