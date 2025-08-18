@@ -129,17 +129,51 @@ const AboutSection = () => {
           </div>
         </div>
 
-        {/* Call to Action */}
-        <div className="text-center mt-16">
-          <div className="bg-accent/10 border border-accent/20 rounded-lg p-8 max-w-2xl mx-auto">
-            <h3 className="text-2xl font-bold text-primary mb-4">
-              Precisa de um advogado trabalhista dedicado?
-            </h3>
-            <p className="text-lg text-muted-foreground mb-6">
-              Agende sua consulta gratuita e descubra como posso ajudar a defender seus direitos.
-            </p>
-            <div className="text-sm text-muted-foreground">
-              <span className="font-semibold text-primary">OAB/BA</span> • Salvador • Lauro de Freitas
+        {/* Enhanced Call to Action */}
+        <div className="text-center mt-20">
+          <div className="relative max-w-4xl mx-auto">
+            {/* Background Glow Effect */}
+            <div className="absolute -inset-4 bg-gradient-to-r from-primary/20 via-accent/20 to-primary/20 rounded-2xl blur-xl opacity-75"></div>
+            
+            {/* Main CTA Container */}
+            <div className="relative bg-gradient-to-br from-white/95 to-white/90 dark:from-background/95 dark:to-background/90 backdrop-blur-sm border border-primary/20 rounded-2xl p-8 lg:p-12 shadow-elegant hover:shadow-glow transition-all duration-500 hover:scale-[1.02]">
+              
+              {/* Header with Icon */}
+              <div className="flex items-center justify-center gap-3 mb-6">
+                <div className="bg-primary/10 p-3 rounded-full">
+                  <Target className="h-6 w-6 text-primary" />
+                </div>
+                <h3 className="text-3xl lg:text-4xl font-bold bg-gradient-to-r from-primary to-primary/80 bg-clip-text text-transparent">
+                  Precisa de um advogado trabalhista dedicado?
+                </h3>
+              </div>
+              
+              {/* Description */}
+              <p className="text-xl lg:text-2xl text-foreground/80 mb-8 leading-relaxed max-w-3xl mx-auto">
+                Agende sua <span className="text-accent font-semibold">consulta gratuita</span> e descubra como posso ajudar a defender seus direitos.
+              </p>
+
+              {/* Location and Credentials */}
+              <div className="flex flex-wrap justify-center items-center gap-4 lg:gap-6">
+                <div className="bg-primary/10 border border-primary/20 rounded-full px-6 py-3 flex items-center gap-2">
+                  <Award className="h-5 w-5 text-primary" />
+                  <span className="font-bold text-primary text-lg">OAB/BA</span>
+                </div>
+                <div className="text-primary/60 text-lg">•</div>
+                <div className="bg-accent/10 border border-accent/20 rounded-full px-6 py-3 flex items-center gap-2">
+                  <Clock className="h-5 w-5 text-accent" />
+                  <span className="font-semibold text-foreground">Salvador</span>
+                </div>
+                <div className="text-primary/60 text-lg">•</div>
+                <div className="bg-accent/10 border border-accent/20 rounded-full px-6 py-3 flex items-center gap-2">
+                  <Users className="h-5 w-5 text-accent" />
+                  <span className="font-semibold text-foreground">Lauro de Freitas</span>
+                </div>
+              </div>
+
+              {/* Decorative Elements */}
+              <div className="absolute top-4 right-4 w-20 h-20 bg-gradient-to-br from-accent/10 to-primary/10 rounded-full blur-xl"></div>
+              <div className="absolute bottom-4 left-4 w-16 h-16 bg-gradient-to-br from-primary/10 to-accent/10 rounded-full blur-xl"></div>
             </div>
           </div>
         </div>
