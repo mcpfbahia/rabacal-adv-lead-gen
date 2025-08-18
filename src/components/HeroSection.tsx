@@ -88,9 +88,9 @@ const HeroSection = () => {
                 </Button>
                 <Button 
                   onClick={handleCall}
-                  variant="accent" 
+                  variant="outline" 
                   size="lg"
-                  className="text-base lg:text-lg px-6 lg:px-8 py-3 lg:py-4 bg-accent text-primary hover:bg-accent/90 hover:scale-105 transition-all duration-300 font-semibold"
+                  className="text-base lg:text-lg px-6 lg:px-8 py-3 lg:py-4 border-white bg-white text-primary hover:bg-primary hover:text-white hover:scale-105 transition-all duration-300 font-semibold"
                 >
                   <Phone className="mr-2 h-5 w-5" />
                   Ligar Agora

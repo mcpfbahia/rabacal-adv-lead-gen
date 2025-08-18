@@ -292,7 +292,7 @@ const ContactSection = () => {
                 onClick={handleCall}
                 variant="outline" 
                 size="lg"
-                className="text-lg px-8 py-4 h-auto border-white text-white hover:bg-white hover:text-primary"
+                className="text-lg px-8 py-4 h-auto border-white bg-white text-primary hover:bg-primary hover:text-white"
               >
                 <Phone className="mr-2 h-5 w-5" />
                 Ligar Agora
