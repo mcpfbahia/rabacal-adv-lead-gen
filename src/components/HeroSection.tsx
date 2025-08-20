@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { useScrollAnimation } from "@/hooks/useScrollAnimation";
-import heroImage from "@/assets/hero-lawyer.jpg";
+import heroImage from "/lovable-uploads/01a81896-8707-4387-9b14-4e34f5a4823f.png";
 import thiagoProfile from "@/assets/thiago-profile.jpg";
 import { Phone, MessageCircle, Calendar } from "lucide-react";
 
@@ -27,8 +27,8 @@ const HeroSection = () => {
       <div className="absolute inset-0 z-0">
         <img 
           src={heroImage} 
-          alt="Escritório de advocacia profissional" 
-          className="w-full h-full object-cover"
+          alt="Advogado trabalhista com tecnologia legal - Soluções jurídicas modernas" 
+          className="w-full h-full object-cover object-center sm:object-center md:object-top"
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary/90 to-primary/70"></div>
       </div>
